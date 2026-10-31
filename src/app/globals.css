@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens
+   Mundo visual: quadra de futsal pintada à noite. Fundo verde-quadra profundo,
+   linhas brancas da quadra como estrutura, vermelho só para "ao vivo", derrota
+   e cartão vermelho. Placar em tipografia de letreiro condensado. */
+:root {
+  --fundo: #0d2419;
+  --superficie: #12301f;
+  --superficie-2: #1a4129;
+  --linha: rgb(243 246 241 / 0.13);
+  --linha-forte: rgb(243 246 241 / 0.32);
+  --texto: #f3f6f1;
+  --texto-2: #b4c6ba;
+  --texto-3: #8aa594;
+  --verde: #4cc97f;
+  --verde-suave: rgb(76 201 127 / 0.14);
+  --sobre-verde: #06210f;
+  --vermelho: #f0565b;
+  --vermelho-suave: rgb(240 86 91 / 0.14);
+  --amarelo: #f2c94c;
+  --foco: #ffffff;
+  color-scheme: dark;
+}
+
+:root[data-tema="claro"] {
+  --fundo: #f4f7f3;
+  --superficie: #ffffff;
+  --superficie-2: #e6eee8;
+  --linha: rgb(13 36 25 / 0.12);
+  --linha-forte: rgb(13 36 25 / 0.3);
+  --texto: #0d2419;
+  --texto-2: #3c5546;
+  --texto-3: #557063;
+  --verde: #17804a;
+  --verde-suave: rgb(23 128 74 / 0.1);
+  --sobre-verde: #ffffff;
+  --vermelho: #c42b31;
+  --vermelho-suave: rgb(196 43 49 / 0.08);
+  --amarelo: #c99a10;
+  --foco: #0d2419;
+  color-scheme: light;
+}
+
+@theme inline {
+  --font-display: var(--fonte-display), "Arial Narrow", sans-serif;
+  --font-sans: var(--fonte-texto), system-ui, sans-serif;
+
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-superficie-2: var(--superficie-2);
+  --color-linha: var(--linha);
+  --color-linha-forte: var(--linha-forte);
+  --color-texto: var(--texto);
+  --color-texto-2: var(--texto-2);
+  --color-texto-3: var(--texto-3);
+  --color-verde: var(--verde);
+  --color-verde-suave: var(--verde-suave);
+  --color-sobre-verde: var(--sobre-verde);
+  --color-vermelho: var(--vermelho);
+  --color-vermelho-suave: var(--vermelho-suave);
+  --color-amarelo: var(--amarelo);
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  html {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    background: var(--fundo);
+    color: var(--texto);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    min-height: 100dvh;
+  }
+  :focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--verde);
+    color: var(--sobre-verde);
+  }
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ------------------------------------------------------------------ componentes */
+@layer components {
+  .titulo-pagina {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .titulo-secao {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 1;
+    text-wrap: balance;
+  }
+  .numero-placar {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.125rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 120ms, border-color 120ms, color 120ms, filter 120ms;
+  }
+  .botao-primario {
+    background: var(--verde);
+    color: var(--sobre-verde);
+  }
+  .botao-primario:hover { filter: brightness(1.08); }
+  .botao-secundario {
+    border: 1px solid var(--linha-forte);
+    color: var(--texto);
+  }
+  .botao-secundario:hover { background: var(--superficie-2); }
+  .botao-perigo {
+    border: 1px solid var(--vermelho);
+    color: var(--vermelho);
+  }
+  .botao:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .campo {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--linha-forte);
+    background: var(--fundo);
+    color: var(--texto);
+  }
+  .campo:focus-visible { outline: 2px solid var(--verde); outline-offset: 0; }
+  .rotulo { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.375rem; color: var(--texto-2); }
+
+  /* Tabelas densas e legíveis */
+  .tabela { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+  .tabela th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--texto-3);
+    text-align: right;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid var(--linha-forte);
+    white-space: nowrap;
+  }
+  .tabela td {
+    padding: 0.625rem 0.5rem;
+    border-bottom: 1px solid var(--linha);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .tabela th:first-child, .tabela td:first-child { padding-left: 0; }
+  .tabela th:last-child, .tabela td:last-child { padding-right: 0; }
+  .tabela .esq { text-align: left; }
+  .tabela tbody tr:hover { background: color-mix(in oklab, var(--superficie-2) 55%, transparent); }
+
+  /* Ponto pulsante de "ao vivo" */
+  .ao-vivo-ponto {
+    position: relative; flex: none;
+    width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--vermelho);
+  }
+  .ao-vivo-ponto::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--vermelho);
+    animation: pulso 1.6s ease-out infinite;
+  }
+  @keyframes pulso {
+    from { transform: scale(1); opacity: 0.6; }
+    to { transform: scale(3); opacity: 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
