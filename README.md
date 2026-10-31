@@ -24,7 +24,7 @@ Stack: **Next.js 15 (App Router)** · **Supabase** (Postgres + Auth + Storage) �
 
 | Camada | Como |
 |---|---|
-| Banco | RLS em **todas** as tabelas; dados pessoais de atletas em tabela separada; view `atleta_publico` só expõe nome completo/idade/foto com consentimento |
+| Banco | RLS em **todas** as tabelas; dados pessoais de atletas em tabela separada; `atleta_publico` (tabela com RLS, mantida por trigger) só recebe nome completo/idade/foto com consentimento ativo |
 | Placar | Calculado por trigger a partir dos lances — ninguém edita placar à mão |
 | Papéis | Tabela `papel` (nunca metadados do usuário); admin precisa de **2FA (TOTP)** para qualquer escrita — conferido no banco (`aal2`) |
 | Servidor | Validação com Zod em toda Server Action; respostas de erro por código (sem refletir texto); redirecionamentos só para caminhos internos |
@@ -34,6 +34,8 @@ Stack: **Next.js 15 (App Router)** · **Supabase** (Postgres + Auth + Storage) �
 | Importação | Só admin, URL validada (https, sem IP/host interno), dados externos validados e mantidos em *staging* até revisão |
 | Segredos | `service_role` e `FIRECRAWL_API_KEY` só no servidor (`server-only`); service role usada apenas no limitador e na assinatura de fotos já liberadas |
 | Auditoria | Trigger registra alterações (sem copiar dados restritos) |
+
+Avisos restantes do *Security Advisor* do Supabase (`alterar_status_partida`, `conceder_papel`, `mesarios`, `usuarios_painel` executáveis por usuários logados) são intencionais: cada função confere o papel (admin com 2FA ou mesário da partida) antes de agir e precisa de privilégio elevado para ler `auth.users` ou fazer a transição controlada de status.
 
 Decisões detalhadas em [`docs/adr`](docs/adr) e glossário em [`CONTEXT.md`](CONTEXT.md).
 
