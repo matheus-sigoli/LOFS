@@ -230,9 +230,13 @@ def bola_fora():
     R = 18
     layers = []
     # bola: vem da esquerda, bate na trave (x=262,y=60) e sai para cima/direita
-    p = anim([(0, [20, 200, 0]), (34, [244, 70, 0]), (70, [330, -40, 0])], [(0.3, 0.2, 0.6, 1), E_OUT])
+    # bate na trave, volta, quica no chão e para em frente ao gol
+    chao_y = 226 - R
+    p = anim([(0, [20, chao_y, 0]), (34, [244, 70, 0]), (58, [196, chao_y, 0]), (72, [176, 168, 0]),
+              (84, [160, chao_y, 0]), (104, [140, chao_y, 0])],
+             [(0.3, 0.2, 0.6, 1), E_IN, E_OUT, E_IN, E_OUT])
     layers.append(camada("bola", bola_shapes(0, 0, R, contorno=3),
-                         ks(p=p, r=anim([(0, 0), (34, 400), (70, 160)], [E_OUT, E_OUT]), o=anim([(60, 100), (70, 0)])),
+                         ks(p=p, r=anim([(0, 0), (34, 400), (58, 300), (104, 180)], [E_OUT, E_OUT, E_OUT])),
                          masks=mascara_circulo(0, 0, R), op=OP))
     # trave tremendo no impacto
     trave = grupo("trave", [path([(270, 225), (270, 60), (350, 60)], fechado=False), stroke(BRANCO, 8, cap=1, join=1)])

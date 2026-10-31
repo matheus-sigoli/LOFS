@@ -22,7 +22,7 @@ export async function Cabecalho() {
           )}
         </div>
       </div>
-      <nav aria-label="Principal" className="mx-auto max-w-6xl overflow-x-auto px-1 sm:px-3">
+      <nav aria-label="Principal" className="mx-auto max-w-6xl overflow-x-auto px-1 [mask-image:linear-gradient(to_right,#000_85%,transparent)] sm:px-3 sm:[mask-image:none]">
         <ul className="flex">
           <li><NavLink href="/">Início</NavLink></li>
           <li><NavLink href="/jogos">Jogos</NavLink></li>
