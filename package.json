@@ -13,7 +13,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types src/lib/*.test.ts",
-    "db:test": "psql \"$DATABASE_URL\" -f supabase/tests/rls_test.sql"
+    "db:test": "psql \"$DATABASE_URL\" -f supabase/tests/rls_test.sql",
+    "animacoes": "python3 scripts/gerar_animacoes.py src/animacoes"
   },
   "dependencies": {
     "@supabase/ssr": "^0.7.0",
@@ -22,7 +23,8 @@
     "react": "^19.1.2",
     "react-dom": "^19.1.2",
     "server-only": "^0.0.1",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "lottie-web": "5.12.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

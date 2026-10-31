@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { Animacao } from "@/components/Animacao";
 import { ListaPartidas, PlacarQuadra } from "@/components/Partidas";
+import escudoAnimado from "@/animacoes/escudo.json";
 import { Vazio } from "@/components/Vazio";
 import { catalogo, listarCampeonatos, partidasEntre, proximasPartidas } from "@/lib/consultas";
 import { fmt, intervaloDoDia } from "@/lib/format";
@@ -26,10 +28,14 @@ export default async function Inicio() {
   return (
     <div className="space-y-16">
       <section aria-labelledby="hoje">
-        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
-          <div>
-            <h1 id="hoje" className="titulo-pagina">Hoje na quadra</h1>
-            <p className="mt-2 text-texto-2 first-letter:uppercase">{fmt.dataLonga(new Date())}</p>
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Animacao dados={escudoAnimado} rotulo="Escudo da LOFS" className="w-[72px] shrink-0 sm:w-[104px]" />
+            <div>
+              <p className="text-sm font-semibold text-verde">Temporada {atual?.ano}</p>
+              <h1 id="hoje" className="titulo-pagina mt-1">Hoje na quadra</h1>
+              <p className="mt-2 text-texto-2 first-letter:uppercase">{fmt.dataLonga(new Date())}</p>
+            </div>
           </div>
           {aoVivo.length > 0 ? (
             <p className="flex items-center gap-2 text-sm font-semibold text-vermelho">

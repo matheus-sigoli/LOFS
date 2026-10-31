@@ -1,32 +1,38 @@
 import type { EquipeResumo } from "@/lib/tipos";
 
-/** Distintivo gerado com as cores da equipe (sem escudos reais). */
+const FORMA = "polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%)";
+
+/**
+ * Distintivo gerado no mesmo desenho do escudo da LOFS: contorno grafite,
+ * faixa superior com a sigla e faixas verticais nas cores da equipe.
+ * Abaixo de 30px a sigla some (ficaria ilegível) e só as cores identificam.
+ */
 export function Escudo({ equipe, tamanho = 32 }: { equipe: Pick<EquipeResumo, "nome_curto" | "cor_primaria" | "cor_secundaria">; tamanho?: number }) {
+  const altura = Math.round(tamanho * 1.1);
+  const borda = Math.max(1.5, tamanho * 0.06);
+  const comSigla = tamanho >= 30;
+  const p = equipe.cor_primaria;
+  const s = equipe.cor_secundaria;
   return (
     <span
       aria-hidden="true"
       translate="no"
-      className="inline-grid shrink-0 place-items-center rounded-md font-display font-extrabold leading-none"
-      style={{
-        width: tamanho,
-        height: tamanho,
-        fontSize: tamanho * 0.38,
-        background: `linear-gradient(135deg, ${equipe.cor_primaria} 0 62%, ${equipe.cor_secundaria} 62% 100%)`,
-        color: legivelSobre(equipe.cor_primaria),
-        boxShadow: "inset 0 0 0 1px rgb(255 255 255 / 0.12)",
-      }}
+      className="relative inline-block shrink-0"
+      style={{ width: tamanho, height: altura, clipPath: FORMA, background: "#2b2f2c" }}
     >
-      {equipe.nome_curto}
+      <span
+        className="absolute flex flex-col overflow-hidden"
+        style={{ inset: borda, clipPath: FORMA, background: `linear-gradient(90deg, ${p} 0 33%, ${s} 33% 67%, ${p} 67%)` }}
+      >
+        {comSigla ? (
+          <span
+            className="flex items-center justify-center font-display font-extrabold leading-none text-white"
+            style={{ height: "36%", background: "#2b2f2c", fontSize: tamanho * 0.3, letterSpacing: "0.02em" }}
+          >
+            {equipe.nome_curto}
+          </span>
+        ) : null}
+      </span>
     </span>
   );
-}
-
-function legivelSobre(hex: string) {
-  const n = parseInt(hex.slice(1), 16);
-  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((c) => {
-    const s = c / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  }) as [number, number, number];
-  const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return l > 0.35 ? "#0d2419" : "#ffffff";
 }
