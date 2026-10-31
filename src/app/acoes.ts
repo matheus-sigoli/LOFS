@@ -41,7 +41,7 @@ export async function alternarFavorito(form: FormData) {
   if (existente) {
     await sb.from("favorito").delete().eq("id", existente.id);
   } else {
-    await sb.from("favorito").insert({ [coluna]: id });
+    await sb.from("favorito").insert(tipo === "campeonato" ? { campeonato_id: id } : { equipe_id: id });
   }
   revalidatePath(caminho);
   revalidatePath("/minha-conta");
