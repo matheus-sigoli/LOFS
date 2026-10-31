@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
-import { Barlow, Big_Shoulders_Display } from "next/font/google";
+import { Barlow, Barlow_Condensed } from "next/font/google";
 import { Cabecalho } from "@/components/Cabecalho";
 import { Rodape } from "@/components/Rodape";
 import "./globals.css";
 
-const display = Big_Shoulders_Display({ subsets: ["latin"], weight: ["700", "800"], variable: "--fonte-display", display: "swap" });
+const display = Barlow_Condensed({ subsets: ["latin"], weight: ["700", "800"], variable: "--fonte-display", display: "swap" });
 const texto = Barlow({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--fonte-texto", display: "swap" });
 
 export const metadata: Metadata = {

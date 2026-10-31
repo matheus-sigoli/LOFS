@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "LOFS — Liga Osasquense de Futsal (projeto acadêmico)",
-  "engines": { "node": ">=20.18" },
+  "engines": { "node": "22.x" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
