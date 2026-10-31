@@ -23,8 +23,8 @@ export function TabelaClassificacao({ grupo, classificam = 2, mostrarNome = true
               <th scope="col"><abbr title="Pontos">P</abbr></th>
               <th scope="col"><abbr title="Jogos">J</abbr></th>
               <th scope="col"><abbr title="Vitórias">V</abbr></th>
-              <th scope="col"><abbr title="Empates">E</abbr></th>
-              <th scope="col"><abbr title="Derrotas">D</abbr></th>
+              <th scope="col" className="hidden sm:table-cell"><abbr title="Empates">E</abbr></th>
+              <th scope="col" className="hidden sm:table-cell"><abbr title="Derrotas">D</abbr></th>
               <th scope="col" className="hidden sm:table-cell"><abbr title="Gols marcados">GP</abbr></th>
               <th scope="col" className="hidden sm:table-cell"><abbr title="Gols sofridos">GC</abbr></th>
               <th scope="col"><abbr title="Saldo de gols">SG</abbr></th>
@@ -48,8 +48,8 @@ export function TabelaClassificacao({ grupo, classificam = 2, mostrarNome = true
                 <td className="font-bold">{l.pontos}</td>
                 <td>{l.jogos}</td>
                 <td>{l.vitorias}</td>
-                <td>{l.empates}</td>
-                <td>{l.derrotas}</td>
+                <td className="hidden sm:table-cell">{l.empates}</td>
+                <td className="hidden sm:table-cell">{l.derrotas}</td>
                 <td className="hidden sm:table-cell">{l.gols_pro}</td>
                 <td className="hidden sm:table-cell">{l.gols_contra}</td>
                 <td className={l.saldo > 0 ? "text-verde" : l.saldo < 0 ? "text-vermelho" : ""}>{l.saldo > 0 ? `+${l.saldo}` : l.saldo}</td>
